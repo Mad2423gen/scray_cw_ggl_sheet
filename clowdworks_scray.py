@@ -5,6 +5,10 @@ import os
 import time
 
 
+# todo: 実装後気がついたこと、【改善アイディア】　
+#  １．表示画面がそっけない、もうちょっとかっこよく　
+#  ２．ステータス画面の行がずれてる
+
 # 初期設定の指定：返り値はリスト化されたファイル名
 def conf_read():
 	# 【初期設定】----------------------------------------------------------------
@@ -14,8 +18,8 @@ def conf_read():
 	# ターゲットURLファイル
 	target_url_file = os.path.join(path, 'clowdworks_url')
 	# --------------------------------------------------------------------------
-	ans = {'job_file': job_file, 'target_url_file': target_url_file}
-	return ans
+	conf_vals = {'job_file': job_file, 'target_url_file': target_url_file}
+	return conf_vals
 
 
 # webページソース取得
@@ -55,7 +59,6 @@ def differential_extraction(NewApplicationList, OldApplicationList):
 		無　→　SendMessageList に追加
 	増分を SendMessageList で返す
 	"""
-	# todo: sqlite3に入れられないか検討
 
 	# 差分比較--------------------------------------------------------
 	# 旧リストに含ま入れない案件を抽出
@@ -73,11 +76,11 @@ def differential_extraction(NewApplicationList, OldApplicationList):
 # Pushbulletの送信
 def send_bullet(msg_list):
 	"""
-	# ---------------------------------------------------------------
-	# 通知をPushbulletに送信
-	# モジュールの使い方は以下URL参照
-	# https://laboratory.kazuuu.net/install-and-use-the-pushbullet-library-in-python/
-	# ---------------------------------------------------------------
+	---------------------------------------------------------------
+	通知をPushbulletに送信
+	モジュールの使い方は以下URL参照
+	https://laboratory.kazuuu.net/install-and-use-the-pushbullet-library-in-python/
+	---------------------------------------------------------------
 	"""
 	from pushbullet import Pushbullet
 	if msg_list:
@@ -140,12 +143,10 @@ def func_nomal():
 	old_subject = []  # 件名のみ保存する配列
 	# 古ファイル読込
 	with open(setting['job_file'], 'r', encoding='utf-8_sig') as of:
-		old_lists = of.readlines() # 注意：呼び出されるのは件名だけ
+		old_lists = of.readlines()  # 注意：呼び出されるのは件名だけ
 		for old_list in old_lists:
 			# 件名のみ格納
 			old_subject.append(old_list.replace('\n', ''))  # 改行を削除、配列へ格納
-	# print(old_subject)
-	# todo: 動作チェック
 
 	# 差分抽出、差分リスト作成(送信と追記に使用）
 	for sbj in old_subject:
@@ -191,7 +192,6 @@ def func_menu():
 
 
 if __name__ == '__main__':
-	# todo:送信がおかしいチェック
 	select_num = func_menu()
 	# 1 = 通常処理
 	# 2 = 初期化処理
