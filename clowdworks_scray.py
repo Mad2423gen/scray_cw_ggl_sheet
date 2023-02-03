@@ -31,7 +31,7 @@ def websourceget(target_url):
 
 
 # タグからデータを取得、返り値はデータリスト
-@retry(wait_fixed=1000)
+@retry(wait_fixed=1000)  # 接続エラー時にリトライ、間隔は１秒毎
 def get_datalist_cloudworks(page_source):
 	soup = BeautifulSoup(page_source.text, 'lxml')
 	# 各タグからデータ取得---------------------------------------------
