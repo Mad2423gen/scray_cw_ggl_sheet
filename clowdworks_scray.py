@@ -6,10 +6,6 @@ import time
 from retrying import retry
 
 
-# todo: 実装後気がついたこと、【改善アイディア】　
-#  １．表示画面がそっけない、もうちょっとかっこよく　
-#  ２．ステータス画面の行がずれてる
-
 # 初期設定の指定：返り値はリスト化されたファイル名
 def conf_read():
 	# 【初期設定】----------------------------------------------------------------
@@ -162,18 +158,11 @@ def func_nomal():
 
 # メニュー・例外時の処理実行
 def func_menu():
-	# 【初期設定】----------------------------------------------------------------
-	path = os.getcwd()
-	# 過去の案件ファイル
-	job_file = os.path.join(path, 'joblist_cw.txt')
-	# ターゲットURLファイル
-	target_url_file = os.path.join(path, 'clowdworks_url')
-	# --------------------------------------------------------------------------
-
+	# 設定読み込み
+	setting_conf = conf_read()
 	# 【処理開始】
-
 	# 例外処理：job_fileがない場合、更新処理を自動実行
-	if os.path.isfile(job_file):
+	if os.path.isfile(setting_conf['job_file']):
 		pass
 	else:
 		print("*** No past files, initialize ***")
@@ -191,6 +180,7 @@ def func_menu():
 	""")
 	sel_num = input('	Press input num :')  # 入力
 	return sel_num
+
 
 
 if __name__ == '__main__':
