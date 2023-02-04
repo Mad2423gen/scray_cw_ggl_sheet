@@ -1,3 +1,4 @@
+このリポジトリは"Project"リポジトリのコピーですが、gspreadモジュールを追加して練習用として保存しています。
 
 
 # scray_cw_ggl_sheet
